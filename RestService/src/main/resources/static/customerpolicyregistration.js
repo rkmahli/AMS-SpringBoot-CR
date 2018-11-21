@@ -40,16 +40,6 @@ function validateDate() {
         $("#date").attr("title", "Mandatory");
         flag = false;
     }
-    else {
-
-        var d1 = Date.parse(str);
-        var d2 = new Date().getTime();
-        if (d1 > d2) {
-            $("#date").attr("data-toggle", "tooltip");
-            $("#date").attr("title", "Date can't be more than system date");
-            flag = false;
-        }
-    }
 }
 
 
@@ -104,7 +94,7 @@ function validateDob() {
 }
 
 function getJson() {
-    var $items = $('#custid,#polid,#agentid,#date,#sum,#mode,#comtype,#name,#relation,#dob');
+    var $items = $('#appid,#custid,#polid,#agentid,#date,#sum,#mode,#comtype,#name,#relation,#dob');
     var obj = {};
     $items.each(function () {
         obj[this.id] = $(this).val();
@@ -112,7 +102,6 @@ function getJson() {
     var json = JSON.stringify(obj);
     return json;
 }
-
 
 function store() {
     var json = getJson();
@@ -146,7 +135,6 @@ function init() {
         localStorage.clear();
         window.location = 'Login';
     }
-
     getAppointments();
     populateAppointmemts();
 }
@@ -168,50 +156,28 @@ function getAppointments() {
     });
 }
 
-
-function populateAppointments(){
-    
+function populateAppointments() {
+    $("#appid").empty();
+    for (i = 0; i < jArr.length; i++) {
+        $("#appid").append('<option value=\"' + jArr[i].id + '\">' + jArr[i].id + '</option>');
+    }
 }
 
-
-
-function populateAgents() {
-    $.ajax({
-        type: "GET",
-        url: "http://localhost:6844/admin/agent",
-        async: false,
-        dataType: "json",
-        success: function (data) {
-            for (i = 0; i < data.length; i++) {
-                $("#agentid").append('<option value=\"' + data[i].id + '\">' + data[i].id + '</option>');
-            }
-        },
-        error: function () {
-            $("#alertmodalbody").empty();
-            $("#alertmodalbody").append('No suitable records Exist!');
-            $("#alertmodal").modal('show');
+function fill() {
+    $('#custid').empty();
+    $('#agentid').empty();
+    $('#date').empty();
+    var apid = $("#appid").val();
+    for (i = 0; i < jArr.length; i++) {
+        if (jArr[i].id == apid) {
+            $('#custid').val(jArr[i].customer.id);
+            $('#agentid').val(jArr[i].agent.id);
+            $('#date').val(jArr[i].date);
+            break;
         }
-    });
+    }
 }
 
-function populatePolicies() {
-    $.ajax({
-        type: "GET",
-        url: "http://localhost:6844/admin/policy",
-        async: false,
-        dataType: "json",
-        success: function (data) {
-            for (i = 0; i < data.length; i++) {
-                $("#polid").append('<option value=\"' + data[i].id + '\">' + data[i].id + '</option>');
-            }
-        },
-        error: function () {
-            $("#alertmodalbody").empty();
-            $("#alertmodalbody").append('No suitable records Exist!');
-            $("#alertmodal").modal('show');
-        }
-    });
-}
 function logout() {
     sessionStorage.clear();
     window.location = "Login";

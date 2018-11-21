@@ -289,6 +289,10 @@ public class RestResourse {
 		Customer customer = cr.findById(rph.getCustid()).get();
 		Agent agent = agr.findById(rph.getAgentid()).get();
 		Policy policy = pr.findById(rph.getPolid()).get();
+		Appointment appointment=aptr.findById(Long.parseLong(rph.getAppid())).get();
+		
+		appointment.setStatus("Success");
+		
 
 		rPolicy.setAgent(agent);
 		rPolicy.setBookingDate(rph.getDate());
@@ -300,14 +304,16 @@ public class RestResourse {
 		rPolicy.setPaymentMode(rph.getMode());
 		rPolicy.setPolicy(policy);
 		rPolicy.setTotalSumAssured(rph.getSum());
+		rPolicy.setAppointment(appointment);
+		
+		
 
+		Appointment savedAppointment=aptr.save(appointment);
 		RegisteredPolicy saved = rpr.save(rPolicy);
 		if (saved != null)
 			return new ResponseEntity<String>(policy.getId(), HttpStatus.OK);
 		return new ResponseEntity<String>("Not Saved", HttpStatus.EXPECTATION_FAILED);
 	}
-
-
 
 	@GetMapping("customer/getagent/{date}/{timeslot}")
 	public ResponseEntity<String> getAvailableAgent(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,

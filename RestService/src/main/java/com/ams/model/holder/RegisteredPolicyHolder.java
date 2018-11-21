@@ -13,6 +13,14 @@ private String comtype;
 private String name;
 private String relation;
 private Date dob;
+private String appid;
+
+public String getAppid() {
+	return appid;
+}
+public void setAppid(String appid) {
+	this.appid = appid;
+}
 public String getCustid() {
 	return custid;
 }
