@@ -31,6 +31,9 @@ public class Appointment {
     @Basic
     @Temporal(TemporalType.DATE)
     private Date date;
+    
+    @Basic
+    String status;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -40,7 +43,15 @@ public class Appointment {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Agent agent;
 
-    public Long getId() {
+    public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Long getId() {
         return id;
     }
 

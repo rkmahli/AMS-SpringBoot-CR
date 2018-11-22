@@ -63,8 +63,19 @@ public class RegisteredPolicy {
 
     @ManyToOne
     private Customer customer;
+    
+    @ManyToOne
+    private Appointment appointment;
 
-    public Long getId() {
+    public Appointment getAppointment() {
+		return appointment;
+	}
+
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
+	}
+
+	public Long getId() {
         return id;
     }
 

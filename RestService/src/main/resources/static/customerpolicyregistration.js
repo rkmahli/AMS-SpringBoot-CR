@@ -15,7 +15,6 @@ function validate() {
     return false;
 }
 
-
 function validateName() {
     var str = $("#name").val();
     if (str == '') {
@@ -136,13 +135,13 @@ function init() {
         window.location = 'Login';
     }
     getAppointments();
-    populateAppointmemts();
+    populateAppointments();
 }
 
 function getAppointments() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:6844/admin/appointment",
+        url: "http://localhost:6844/admin/appointment/",
         async: false,
         dataType: "json",
         success: function (data) {
