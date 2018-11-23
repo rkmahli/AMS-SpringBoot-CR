@@ -17,4 +17,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 	
 	@Query(value="SELECT * FROM appointment a WHERE a.id NOT IN (SELECT rp.appointment_id FROM registered_policy rp) AND a.status='Pending'",nativeQuery=true)
 	List<Appointment> getPendingRegistrations();
+	
+	@Query(value="SELECT * FROM appointment a WHERE a.id=:agntId AND a.status='Success'",nativeQuery=true)
+	List<Appointment> getSuccessfulAppointments(@Param("agntId") String agntId);
 }

@@ -458,7 +458,7 @@ public class RestResourse {
 			}
 			
 			
-			int pol=list.size();
+			int pol=aptr.getSuccessfulAppointments(id).size();
 			
 			int app=aptr.findByAgentId(id).size();
 			

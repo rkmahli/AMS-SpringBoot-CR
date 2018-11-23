@@ -1,5 +1,7 @@
 var flag = false;
 var jArr;
+var jArr2;
+
 function validate() {
     flag = true;
     $('[data-toggle="tooltip"]').tooltip('dispose');
@@ -14,6 +16,7 @@ function validate() {
     if (flag == true) { store(); }
     return false;
 }
+
 
 function validateName() {
     var str = $("#name").val();
@@ -136,6 +139,8 @@ function init() {
     }
     getAppointments();
     populateAppointments();
+    getPolicies();
+    fill();
 }
 
 function getAppointments() {
@@ -168,7 +173,7 @@ function fill() {
     $('#date').empty();
     var apid = $("#appid").val();
     for (i = 0; i < jArr.length; i++) {
-        if (jArr[i].id == apid) {
+        if (jArr[i].id==apid) {
             $('#custid').val(jArr[i].customer.id);
             $('#agentid').val(jArr[i].agent.id);
             $('#date').val(jArr[i].date);
@@ -180,4 +185,24 @@ function fill() {
 function logout() {
     sessionStorage.clear();
     window.location = "Login";
+}
+
+function getPolicies(){
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:6844/admin/policy",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            $("#polid").empty();
+            for(i=0;i<data.length;i++){
+                $("#polid").append('<option value="'+data[i].id+'">'+data[i].id+'</option>');
+            }
+        },
+        error: function () {
+            $("#alertmodalbody").empty();
+            $("#alertmodalbody").append('No existing policies!');
+            $("#alertmodal").modal('show');
+        }
+    });
 }

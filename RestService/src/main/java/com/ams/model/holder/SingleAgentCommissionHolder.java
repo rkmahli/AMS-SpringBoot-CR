@@ -6,8 +6,7 @@ public class SingleAgentCommissionHolder {
 	private float total;
 	private float app;
 	private String name;
-	private float commission;
-	
+	private float commission;	
 	
 	public float getCommission() {
 		return commission;
