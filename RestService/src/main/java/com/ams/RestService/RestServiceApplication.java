@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@ComponentScan("com.ams.resource")
+@ComponentScan({"com.ams.resource","com.ams.security"})
 @EntityScan("com.ams.model")
 @EnableJpaRepositories("com.ams.repo")
 @EnableTransactionManagement

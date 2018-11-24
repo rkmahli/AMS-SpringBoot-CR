@@ -52,6 +52,7 @@ import com.ams.repo.CustomerPasswordRepository;
 import com.ams.repo.CustomerRepository;
 import com.ams.repo.PolicyRepository;
 import com.ams.repo.RegisteredPolicyRepository;
+import com.ams.security.HashGenerator;
 
 @RestController
 @CrossOrigin
@@ -79,7 +80,7 @@ public class RestResourse {
 		List<AdminPassword> list = apr.getAdminPassword(lh.getUsername());
 		if (!list.isEmpty()) {
 			String password=list.get(0).getPassword();
-			if(lh.getPassword().equals(password)) {
+			if(HashGenerator.getSHA(lh.getPassword()).equals(password)) {
 				return new ResponseEntity<String>(HttpStatus.OK);
 			}
 		}
@@ -91,7 +92,7 @@ public class RestResourse {
 		List<CustomerPassword> list = cpr.getCustomerPassword(lh.getUsername());
 		if (!list.isEmpty()) {
 			String password=list.get(0).getPassword();
-			if(lh.getPassword().equals(password)) {
+			if(HashGenerator.getSHA(lh.getPassword()).equals(password)) {
 				return new ResponseEntity<String>(HttpStatus.OK);
 			}
 		}
@@ -149,7 +150,7 @@ public class RestResourse {
 		}
 
 		cp.setCustomer(customer);
-		cp.setPassword(ch.getPassword());
+		cp.setPassword(HashGenerator.getSHA(ch.getPassword()));
 
 		if (!cr.existsById(customer.getId())) {
 			cr.save(customer);
@@ -496,7 +497,4 @@ public class RestResourse {
 		}
 		return new ResponseEntity<List<Customer>>(HttpStatus.NOT_FOUND);
 	}
-	
-	
-
 }

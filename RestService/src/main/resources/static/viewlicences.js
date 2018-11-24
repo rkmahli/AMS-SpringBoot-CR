@@ -40,6 +40,7 @@ function active() {
                 '<div class="d-flex justify-content-between align-items-center">' +
                 '<div class="btn-group">' +
                 '<button type="button" class="btn btn-sm btn-info" onclick="policyDetails(\'' + jArr[i].id + '\')">Details</button>' +
+                '<button type="button" class="btn btn-sm btn-success" onclick="extend(\'' + jArr[i].id + '\')">Extend</button>' +
                 '</div>' +
                 '<small class="text-muted">Expires On: ' + jArr[i].licenceExpiryDate + '</small>' +
                 '</div>' +
@@ -183,6 +184,64 @@ function renew(polId) {
     return false;
 }
 
+
+
+function extend(polId) {
+
+    $("#modalbody").empty();
+    var tHead = '<table class="table table-hover">' +
+        '<thead>' +
+        '</thead>' +
+        '<tbody>';
+
+    var tFoot = '</tbody>' +
+        '</table>';
+
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:6844/admin/policy/" + polId,
+        async: false,
+        dataType: "json",
+        success: function (data) {
+
+            var body = '<tr><th>ID</th><td>' + data.id + '</td></tr>' +
+                '<tr><th>Name</th><td>' + data.name + '</td></tr>' +
+                '<tr><th>Company ID</th><td>' + data.companyId + '</td></tr>' +
+                '<tr><th>Licence Registration Date</th><td>' + data.licenceRegistryDate + '</td></tr>' +
+                '<tr><th>Licence Expiry Date</th><td>' + data.licenceExpiryDate + '</td></tr>' +
+                '<tr><th>Select Renewal Duration</th><td>' +
+                '<select class="form-control" onchange="calExp2(\''+data.licenceExpiryDate+'\')" id="period">' +
+                '<option value=0 selected disabled>Please Select A Period</option>' +
+                '<option value=6>6 Months</option>' +
+                '<option value=12>12 Months</option>' +
+                '<option value=18>18 Months</option>' +
+                '<option value=24>24 Months</option>' +
+                '<option value=30>30 Months</option>' +
+                '</select>' +
+                '</td></tr>' +
+                '<tr><th>Updated Expiry Date</th><td>' +
+                '<input class="form-control" type="date" id="exp" disabled required>' +
+                '</td></tr>';
+
+            var subbtn = '<a class="btn btn-success" onclick="renewLicence(\'' + data.id + '\',$(\'#exp\').val())">Extend</a>';
+
+            var table = tHead + body + tFoot + subbtn;
+
+            $("#modalbody").append(table);
+            $("#pModal").modal("show");
+
+        },
+        error: function () {
+            $("#alertmodalbody").empty();
+            $("#alertmodalbody").append('No policy record could be found');
+            $("#alertmodal").modal("show");
+        }
+    });
+    return false;
+}
+
+77
+
 function calExp() {
     var date = new Date();
     var mth = parseInt($("#period").val());
@@ -191,6 +250,18 @@ function calExp() {
     var strd = (date.getFullYear()) + '-' + (date.getMonth() < 9 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1)) + '-' + (date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate());
     $("#exp").val(strd);
 }
+
+
+function calExp2(exp) {
+    var date = new Date(exp);
+    var mth = parseInt($("#period").val());
+    var newm = parseInt(date.getMonth() + mth);
+    date.setMonth(newm);
+    var strd = (date.getFullYear()) + '-' + (date.getMonth() < 9 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1)) + '-' + (date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate());
+    $("#exp").val(strd);
+}
+
+
 
 function renewLicence(id, eDt) {
 
@@ -289,6 +360,7 @@ function search(){
                 '<div class="d-flex justify-content-between align-items-center">' +
                 '<div class="btn-group">' +
                 '<button type="button" class="btn btn-sm btn-info" onclick="policyDetails(\'' + jArr[i].id + '\')">Details</button>' +
+                '<button type="button" class="btn btn-sm btn-success" onclick="extend(\'' + jArr[i].id + '\')">Extend</button>' +
                 '</div>' +
                 '<small class="text-muted">Expires On: ' + jArr[i].licenceExpiryDate + '</small>' +
                 '</div>' +

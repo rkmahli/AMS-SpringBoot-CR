@@ -173,7 +173,7 @@ function fill() {
     $('#date').empty();
     var apid = $("#appid").val();
     for (i = 0; i < jArr.length; i++) {
-        if (jArr[i].id==apid) {
+        if (jArr[i].id == apid) {
             $('#custid').val(jArr[i].customer.id);
             $('#agentid').val(jArr[i].agent.id);
             $('#date').val(jArr[i].date);
@@ -187,7 +187,7 @@ function logout() {
     window.location = "Login";
 }
 
-function getPolicies(){
+function getPolicies() {
     $.ajax({
         type: "GET",
         url: "http://localhost:6844/admin/policy",
@@ -195,13 +195,17 @@ function getPolicies(){
         dataType: "json",
         success: function (data) {
             $("#polid").empty();
-            for(i=0;i<data.length;i++){
-                $("#polid").append('<option value="'+data[i].id+'">'+data[i].id+'</option>');
+            for (i = 0; i < data.length; i++) {
+                var d1 = new Date(data[i].licenceExpiryDate);
+                var d2 = new Date();
+                if (d1 > d2) {
+                    $("#polid").append('<option value="' + data[i].id + '">' + data[i].id + '</option>');
+                }
             }
         },
         error: function () {
             $("#alertmodalbody").empty();
-            $("#alertmodalbody").append('No existing policies!');
+            $("#alertmodalbody").append('No policies exist!');
             $("#alertmodal").modal('show');
         }
     });

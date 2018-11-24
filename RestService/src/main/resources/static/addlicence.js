@@ -184,3 +184,23 @@ function logout(){
     sessionStorage.clear();
     window.location="Login";
 }
+
+function fillCID(){
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:6844/admin/policy/",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            for(i=0;i<data.length;i++){
+                if(data[i].companyName==$("#comname").val()){
+                    $("#cid").val(data[i].companyId);
+                    $("#address").val(data[i].companyAddress);
+                    $("#conname").val(data[i].keyContactName);
+                    $("#contact").val(data[i].keyContactNumber);
+                    $("#email").val(data[i].companyEMail);
+                }
+            }
+        }
+    });
+}

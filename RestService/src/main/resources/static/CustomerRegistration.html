@@ -63,7 +63,7 @@
 </head>
 
 
-<body>
+<body onload="init()">
     <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
         <a class="navbar-brand" href="/">AMS</a>
 
@@ -97,19 +97,20 @@
 
             </div>
 
-            <div class="form-group ">
-                <label for="city"><span style='color: red'>*</span>City</label>
-
-                <input class="form-control" id="city" type="text">
-
-            </div>
 
             <div class="form-group ">
                 <label for="state"><span style='color: red'>*</span>State</label>
+                <select class="form-control" id="state" type="text" onchange="cities()"></select>
+            </div>
 
-                <input class="form-control" id="state" type="text">
+            <div class="form-group ">
+                <label for="city"><span style='color: red'>*</span>City</label>
+
+                <select class="form-control" id="city" type="text"></select>
 
             </div>
+
+ 
 
             <div class="form-group ">
 
