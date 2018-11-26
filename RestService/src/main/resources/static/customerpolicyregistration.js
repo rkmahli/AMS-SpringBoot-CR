@@ -109,7 +109,7 @@ function store() {
     var json = getJson();
     $.ajax({
         type: "POST",
-        url: "http://localhost:6844/admin/customer/policy/register",
+        url: "http://10.230.179.19:6844/admin/customer/policy/register",
         async: false,
         data: json,
         contentType: "application/json",
@@ -117,7 +117,9 @@ function store() {
         success: function (data) {
 
             $("#alertmodalbody").empty();
-            $("#alertmodalbody").append('The registration was successful for : ' + data);
+            $("#alertmodalheader").empty();
+            $("#alertmodalheader").append('Registration Successful');
+            $("#alertmodalbody").append('The policy has been successfully registered for the customer.');
             $("#alertmodal").on("hidden.bs.modal", function () {
                 window.location = "AdminHome"
             });
@@ -125,7 +127,9 @@ function store() {
         },
         error: function () {
             $("#alertmodalbody").empty();
-            $("#alertmodalbody").append('Data could not be stored!');
+            $("#alertmodalheader").empty();
+            $("#alertmodalheader").append('Registration Unsuccessful');
+            $("#alertmodalbody").append('The policy could not be registered for the customer. Please try later.');
             $("#alertmodal").modal('show');
         }
     });
@@ -146,15 +150,20 @@ function init() {
 function getAppointments() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:6844/admin/appointment/",
+        url: "http://10.230.179.19:6844/admin/appointment/",
         async: false,
         dataType: "json",
         success: function (data) {
             jArr = data;
         },
         error: function () {
+            $("#alertmodal").on("hidden.bs.modal", function () {
+                window.location = "AdminHome"
+            });
             $("#alertmodalbody").empty();
-            $("#alertmodalbody").append('No suitable records Exist!');
+            $("#alertmodalheader").empty();
+            $("#alertmodalheader").append('No Approvals Pending');
+            $("#alertmodalbody").append('No appointments that are pending for approval exist. Please check this module later.');
             $("#alertmodal").modal('show');
         }
     });
@@ -162,8 +171,25 @@ function getAppointments() {
 
 function populateAppointments() {
     $("#appid").empty();
+    var flag = false;
     for (i = 0; i < jArr.length; i++) {
-        $("#appid").append('<option value=\"' + jArr[i].id + '\">' + jArr[i].id + '</option>');
+        var d1 = new Date(jArr[i].date);
+        var d2 = new Date();
+        if (d1 <= d2) {
+            $("#appid").append('<option value=\"' + jArr[i].id + '\">' + jArr[i].id + '</option>');
+            flag = true;
+        }
+    }
+    if (!flag) {
+        $("#alertmodal").on("hidden.bs.modal", function () {
+            window.location = "AdminHome"
+        });
+        $("#alertmodalbody").empty();
+        $("#alertmodalheader").empty();
+        $("#alertmodalheader").append('No Approvals Pending');
+        $("#alertmodalbody").append('No appointments that are pending for approval exist. Please check this module later.');
+        $("#alertmodal").modal('show');
+
     }
 }
 
@@ -190,23 +216,76 @@ function logout() {
 function getPolicies() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:6844/admin/policy",
+        url: "http://10.230.179.19:6844/admin/policy",
         async: false,
         dataType: "json",
         success: function (data) {
             $("#polid").empty();
+            var flag = false;
             for (i = 0; i < data.length; i++) {
                 var d1 = new Date(data[i].licenceExpiryDate);
                 var d2 = new Date();
                 if (d1 > d2) {
                     $("#polid").append('<option value="' + data[i].id + '">' + data[i].id + '</option>');
+                    flag = true;
                 }
+            }
+            if (!flag) {
+                $("#alertmodal").on("hidden.bs.modal", function () {
+                    window.location = "AdminHome"
+                });
+                $("#alertmodalbody").empty();
+                $("#alertmodalheader").empty();
+                $("#alertmodalheader").append('Active Policies Not Present');
+                $("#alertmodalbody").append('No active policies are registered with the system! Please add policies from Manage Licences Module to continue.');
+                $("#alertmodal").modal('show');
+
             }
         },
         error: function () {
+            $("#alertmodal").on("hidden.bs.modal", function () {
+                window.location = "AdminHome"
+            });
             $("#alertmodalbody").empty();
-            $("#alertmodalbody").append('No policies exist!');
+            $("#alertmodalheader").empty();
+            $("#alertmodalheader").append('Active Policies Not Present');
+            $("#alertmodalbody").append('No active policies are registered with the system! Please add policies from Manage Licences Module to continue.');
             $("#alertmodal").modal('show');
+
         }
     });
+}
+
+function invalidate(){
+    var id=$("#appid").val();
+
+    $.ajax({
+        type: "GET",
+        url: "http://10.230.179.19:6844//admin/customer/appointment/fail/"+id,
+        async: false,
+        dataType: "text",
+        success: function (data) {
+            $("#alertmodal").on("hidden.bs.modal", function () {
+                window.location = "AdminHome"
+            });
+            $("#alertmodalbody").empty();
+            $("#alertmodalheader").empty();
+            $("#alertmodalheader").append('Operation Successful');
+            $("#alertmodalbody").append('Policy with ID '+id+ ' has been invalidated!');
+            $("#alertmodal").modal('show');
+
+        },
+        error: function () {
+            $("#alertmodal").on("hidden.bs.modal", function () {
+                window.location = "AdminHome"
+            });
+            $("#alertmodalbody").empty();
+            $("#alertmodalheader").empty();
+            $("#alertmodalheader").append('Operation Successful');
+            $("#alertmodalbody").append('Policy with ID '+id+ ' could not be invalidated!');
+            $("#alertmodal").modal('show');
+
+        }
+    });
+
 }

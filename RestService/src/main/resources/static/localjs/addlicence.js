@@ -151,7 +151,7 @@ function validateDor() {
         var json=getJson();
         $.ajax({
           type: "POST",
-          url: "http://localhost:6844/admin/licence/add",
+          url: "http://10.230.179.19:6844/admin/licence/add",
           async: false,
           data: json,
           contentType: "application/json",

@@ -9,24 +9,24 @@ function validate() {
     return false;
 }
 
-function validateDates(){
-    var s1=$("#from").val();
-    var s2=$("#to").val();
-    if(s1==''||s2==''){
+function validateDates() {
+    var s1 = $("#from").val();
+    var s2 = $("#to").val();
+    if (s1 == '' || s2 == '') {
         $("#to").attr("data-toggle", "tooltip");
         $("#to").attr("title", "Dates can't be empty!");
-            flag = false;
+        flag = false;
     }
-    else if(s1!=''&&s2!=''){
-        var d1=new Date(s1);
-        var d2=new Date(s2);
-        var dif=(d2.getTime()-d1.getTime())/2592000000;
-        if(d1>d2){
+    else if (s1 != '' && s2 != '') {
+        var d1 = new Date(s1);
+        var d2 = new Date(s2);
+        var dif = (d2.getTime() - d1.getTime()) / 2592000000;
+        if (d1 > d2) {
             $("#to").attr("data-toggle", "tooltip");
             $("#to").attr("title", "Cannot exceed the above date");
             flag = false;
         }
-        else if(dif>3){
+        else if (dif > 3) {
             $("#to").attr("data-toggle", "tooltip");
             $("#to").attr("title", "Commission calculation can't exceed 3 months");
             flag = false;
@@ -43,12 +43,12 @@ function init() {
     $("#formspace").append(allform);
 }
 
-function selectForm(){
-    if($("#formselect").find(":selected").text()=='All Agents'){
+function selectForm() {
+    if ($("#formselect").find(":selected").text() == 'All Agents') {
         $("#formspace").empty();
         $("#formspace").append(allform);
     }
-    else if($("#formselect").find(":selected").text()=='Single Agent'){
+    else if ($("#formselect").find(":selected").text() == 'Single Agent') {
 
         $("#formspace").empty();
         $("#formspace").append(singleform);
@@ -57,147 +57,155 @@ function selectForm(){
     }
 }
 
-function allAgents(){
+function allAgents() {
     $("#modalbody").empty();
-    var tHead='<table class="table table-light">'+
-    '<thead style="color:white;">'+
-    '<tr>'+
-    '<th>Agent ID</th>'+
-    '<th>Agent Name</th>'+
-    '<th>Total Amount</th>'+
-    '<th>Total Commission</th>'+
-    '</tr>'+
-    '</thead>'+
-    '<tbody style="color:white;">';
+    var tHead = '<table class="table table-light">' +
+        '<thead style="color:white;">' +
+        '<tr>' +
+        '<th>Agent ID</th>' +
+        '<th>Agent Name</th>' +
+        '<th>Total Amount</th>' +
+        '<th>Total Commission</th>' +
+        '</tr>' +
+        '</thead>' +
+        '<tbody style="color:white;">';
 
-    var tFoot='</tbody>'+
-    '</table>';
+    var tFoot = '</tbody>' +
+        '</table>';
 
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:6844/admin/commission/" + $("#from").val() + "/" + $("#to").val(),
+        url: "http://10.230.179.19:6844/admin/commission/" + $("#from").val() + "/" + $("#to").val(),
         async: false,
         dataType: "json",
         success: function (data) {
-            
-            var body='';
-            for(i=0;i<data.length;i++){
-                body=body+'<tr><td>'+data[i].id+'</td><td>'+data[i].name+'</td><td>'+data[i].total+'</td><td>'+data[i].commission+'</td></tr>'
-            }  
-              var table=tHead+body+tFoot;
-              $("#modalbody").append(table);
-              $("#cModal").modal("show");
+
+            var body = '';
+            for (i = 0; i < data.length; i++) {
+                body = body + '<tr><td>' + data[i].id + '</td><td>' + data[i].name + '</td><td>' + data[i].total + '</td><td>' + data[i].commission + '</td></tr>'
+            }
+            var table = tHead + body + tFoot;
+            $("#modalbody").append(table);
+            $("#cModal").modal("show");
         },
-        error: function () { 
-            $("#alertmodalbody").empty(); 
-            $("#alertmodalbody").append('No records exist!');
-            $("#alertmodal").modal('show');   
-    }
+        error: function () {
+            $("#alertmodalbody").empty();
+            $("#alertmodalheader").empty();
+            $("#alertmodalheader").append('Message');
+            $("#alertmodalbody").append('No corresponding records found! Please select a different date-range.');
+            $("#alertmodal").modal('show');
+        }
     });
     return false;
 }
 
-function singleAgent(){
+function singleAgent() {
     $("#modalbody").empty();
-    var tHead='<table class="table table-hover">'+
-    '<thead style="color:white;">'+
-    '<tr>'+
-    '<th>Agent ID</th>'+
-    '<th>Agent Name</th>'+
-    '<th>Total Amount</th>'+
-    '<th>Total Commission</th>'+
-    '<th>No. Of Appointments</th>'+
-    '<th>No. Of Policies Registered</th>'+
-    '</tr>'+
-    '</thead>'+
-    '<tbody style="color:white;">';
+    var tHead = '<table class="table table-hover">' +
+        '<thead style="color:white;">' +
+        '<tr>' +
+        '<th>Agent ID</th>' +
+        '<th>Agent Name</th>' +
+        '<th>Total Amount</th>' +
+        '<th>Total Commission</th>' +
+        '<th>No. Of Appointments</th>' +
+        '<th>No. Of Policies Registered</th>' +
+        '</tr>' +
+        '</thead>' +
+        '<tbody style="color:white;">';
 
-    var tFoot='</tbody>'+
-    '</table>';
+    var tFoot = '</tbody>' +
+        '</table>';
 
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:6844/admin/commission/"+ $("#agentid").val() +"/" + $("#from").val() + "/" + $("#to").val(),
+        url: "http://10.230.179.19:6844/admin/commission/" + $("#agentid").val() + "/" + $("#from").val() + "/" + $("#to").val(),
         async: false,
         dataType: "json",
         success: function (data) {
-            var body='<tr><td>'+data.id+'</td><td>'+data.name+'</td><td>'+data.total+'</td><td>'+data.commission+'</td><td>'+data.app+'</td><td>'+data.pol+'</td></tr>'
-              var table=tHead+body+tFoot;
-              $("#modalbody").append(table);
-              $("#cModal").modal("show");
+            var body = '<tr><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.total + '</td><td>' + data.commission + '</td><td>' + data.app + '</td><td>' + data.pol + '</td></tr>'
+            var table = tHead + body + tFoot;
+            $("#modalbody").append(table);
+            $("#cModal").modal("show");
         },
-        error: function () { $("#alertmodalbody").empty(); 
-        $("#alertmodalbody").append('No suitable records exist!');
-        $("#alertmodal").modal('show');  }
+        error: function () {
+            $("#alertmodalbody").empty();
+            $("#alertmodalheader").empty();
+            $("#alertmodalheader").append('Message');
+            $("#alertmodalbody").append('No corresponding records found! Please select a different date-range.');
+            $("#alertmodal").modal('show');
+        }
     });
     return false;
 }
 
-function populateAgents(){
+function populateAgents() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:6844/admin/agent",
+        url: "http://10.230.179.19:6844/admin/agent",
         async: false,
         dataType: "json",
         success: function (data) {
-            for(i=0;i<data.length;i++){
-                $("#agentid").append('<option value=\"'+data[i].id+'\">'+data[i].id+'</option>');
+            for (i = 0; i < data.length; i++) {
+                $("#agentid").append('<option value=\"' + data[i].id + '\">' + data[i].id + '</option>');
             }
         },
-        error: function () { 
-            $("#alertmodalbody").empty(); 
-            $("#alertmodalbody").append('No suitable records exist!');
-            $("#alertmodal").modal('show'); 
+        error: function () {
+            $("#alertmodalbody").empty();
+            $("#alertmodalheader").empty();
+            $("#alertmodalheader").append('Message');
+            $("#alertmodalbody").append('No agents are currently registred with the system. Please register agents from the Agent Registration Module.');
+            $("#alertmodal").modal('show');
         }
     });
 }
 
-function logout(){
+function logout() {
     sessionStorage.clear();
-    window.location="Login";
+    window.location = "Login";
 }
 
-var singleform ='<form onsubmit="return singleAgent()">'+
-'<div class="form-group">'+
-'<label for="agentid">Agent ID</label>'+
-'<select id="agentid" type="text" class="form-control" placeholder="AgentId"></select>'+
-'</div>'+
-'<div class="form-group">'+
-'<label for="from">From Date </label>'+
-'<input class="form-control" type="date" id="from" placeholder="From Date">'+
-'</div>'+
-'<div class="form-group ">'+
-'<label for="to">To Date </label>'+
-'<input class="form-control" type="date" id="to" placeholder="To Date">'+
-'</div>'+
-'<div class="form-group ">'+
-'</div>'+
-'<hr>'+
-'<div class="form-group">'+
-'<center>'+
-'<button class="btn btn-primary col-6" type="submit">Submit</button>'+
-'</center>'+
-'</div>'+
-'</form>';
+var singleform = '<form onsubmit="return singleAgent()">' +
+    '<div class="form-group">' +
+    '<label for="agentid">Agent ID</label>' +
+    '<select id="agentid" type="text" class="form-control" placeholder="AgentId"></select>' +
+    '</div>' +
+    '<div class="form-group">' +
+    '<label for="from">From Date </label>' +
+    '<input class="form-control" type="date" id="from" placeholder="From Date">' +
+    '</div>' +
+    '<div class="form-group ">' +
+    '<label for="to">To Date </label>' +
+    '<input class="form-control" type="date" id="to" placeholder="To Date">' +
+    '</div>' +
+    '<div class="form-group ">' +
+    '</div>' +
+    '<hr>' +
+    '<div class="form-group">' +
+    '<center>' +
+    '<button class="btn btn-primary col-6" type="submit">Submit</button>' +
+    '</center>' +
+    '</div>' +
+    '</form>';
 
-var allform ='<form onsubmit="return allAgents()">'+
-'<div class="form-group">'+
-'<label for="from">From Date </label>'+
-'<input class="form-control" type="date" id="from" placeholder="From Date">'+
-'</div>'+
-'<div class="form-group ">'+
-'<label for="to">To Date </label>'+
-'<input class="form-control" type="date" id="to" placeholder="To Date">'+
-'</div>'+
-'<div class="form-group ">'+
-'</div>'+
-'<hr>'+
-'<div class="form-group">'+
-'<center>'+
-'<button class="btn btn-primary col-6" type="submit">Submit</button>'+
-'</center>'+
-'</div>'+
-'</form>';
+var allform = '<form onsubmit="return allAgents()">' +
+    '<div class="form-group">' +
+    '<label for="from">From Date </label>' +
+    '<input class="form-control" type="date" id="from" placeholder="From Date">' +
+    '</div>' +
+    '<div class="form-group ">' +
+    '<label for="to">To Date </label>' +
+    '<input class="form-control" type="date" id="to" placeholder="To Date">' +
+    '</div>' +
+    '<div class="form-group ">' +
+    '</div>' +
+    '<hr>' +
+    '<div class="form-group">' +
+    '<center>' +
+    '<button class="btn btn-primary col-6" type="submit">Submit</button>' +
+    '</center>' +
+    '</div>' +
+    '</form>';
 

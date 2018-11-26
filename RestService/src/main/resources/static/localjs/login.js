@@ -35,7 +35,7 @@ function getPassword() {
     var str2=$("#inputPassword").val();
     var str3;
     var str4;
-    var url = 'http://localhost:6844/';
+    var url = 'http://10.230.179.19:6844/';
     if (str.substr(0, 2) == 'CU') {
         url = url + 'customer' + '/password/' + $("#inputEmail").val();
         str3='custUser';

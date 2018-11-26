@@ -2,20 +2,20 @@ $(function () {
 
     $("#filladdress").click(function () {
         if ($(this).is(":checked")) {
-            $("#caddress").val($("#paddress").val());
+            $("#cAddress").val($("#pAddress").val());
         } else {
-            $("caddress").val('');
+            $("cAddress").val('');
         }
     });
     $("#idType").on("change", function () {
-        var adhar = '<label><span style="color:red">*</span>Adhar</label>' +
-            '<input type="text" class="form-control" name="apid_adhar" id="apid" placeholder="Enter Adhar Number">';
+        var adhar = '<label><span style="color:red">*</span>Aadhar</label>' +
+            '<input type="text" class="form-control" name="apid_adhar" id="apid" placeholder="DDDDDDDDDDDD">';
         var passport = '<label><span style="color:red">*</span>Passport</label>' +
-            '<input type="text" class="form-control" name="apid_passport" id="apid" placeholder="Enter Passport Number">';
+            '<input type="text" class="form-control" name="apid_passport" id="apid" placeholder="ADD DDDDD">';
         var drive = '<label><span style="color:red">*</span>Driving Licence</label>' +
-            '<input type="text" class="form-control" name="apid_driving" id="apid" placeholder="Enter Driving Licence Number">';
+            '<input type="text" class="form-control" name="apid_driving" id="apid" placeholder="AADDDDDDDDDDDDD">';
         var voter = '<label><span style="color:red">*</span>Voter Id</label>' +
-            '<input type="text" class="form-control" name="apid_voter" id="apid" placeholder="Enter Voter Id">';
+            '<input type="text" class="form-control" name="apid_voter" id="apid" placeholder="AAADDDDDDD">';
         if ($('#idType').val() == 'Aadhar') {
             $('#apidfield').empty();
             $(adhar).appendTo('#apidfield');
@@ -139,12 +139,10 @@ jQuery(function ($) {
             apid_driving: {
                 required: true,
                 pattern: /^([A-Z]{2})(\d{2})(\d{4})(\d{7})$/i
-
             },
             apid_passport: {
                 required: true,
-                pattern: /^[A-PR-WY][1-9]\d\s?\d{4}[1-9]$/i
-
+                pattern: /^[A-Z][1-9]\d\s?\d{4}[1-9]$/i
             },
             apid_voter: {
                 required: true,
@@ -188,7 +186,7 @@ jQuery(function ($) {
 
 
 function getJson() {
-    var $items = $('#name,#dob,#contact,#email,#address,#zipcode,#city,#state,#doj,#type,#apid,#pAddress,#cAddress,#idType');
+    var $items = $('#name,#dob,#contact,#email,#zipcode,#city,#state,#doj,#type,#apid,#pAddress,#cAddress,#idType');
     var obj = {};
     $items.each(function () {
         obj[this.id] = $(this).val();
@@ -201,7 +199,7 @@ function store() {
     var json = getJson();
     $.ajax({
         type: "POST",
-        url: "http://localhost:6844/admin/agent/register",
+        url: "http://10.230.179.19:6844/admin/agent/register",
         async: false,
         data: json,
         contentType: "application/json",
@@ -209,6 +207,8 @@ function store() {
         success: function (data) {
 
             $("#alertmodalbody").empty();
+            $("#alertmodalheader").empty();
+            $("#alertmodalheader").append('Registration Successful');
             $("#alertmodalbody").append('Agent with ID ' + data + ' has been successfully registered!');
             $("#alertmodal").on("hidden.bs.modal", function () {
                 window.location = "AdminHome";
@@ -220,7 +220,9 @@ function store() {
         error: function () {
 
             $("#alertmodalbody").empty();
-            $("#alertmodalbody").append('Server Error! Please try later.');
+            $("#alertmodalheader").empty();
+            $("#alertmodalheader").append('Registration Successful');
+            $("#alertmodalbody").append('Agent registration failed! Please try later.');
             $("#alertmodal").modal('show');
         }
     });

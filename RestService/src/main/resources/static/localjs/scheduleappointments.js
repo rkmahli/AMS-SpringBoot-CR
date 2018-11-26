@@ -37,7 +37,7 @@ function getJson() {
 
     $.ajax({
         type: "GET",
-        url: 'http://localhost:6844/customer/getagent/'+$("#doa").val()+'/'+$("#slot").val(),
+        url: 'http://10.230.179.19:6844/customer/getagent/'+$("#doa").val()+'/'+$("#slot").val(),
         async: false,
         dataType: "text",
         success: function(data){obj.aid=data;},
@@ -56,7 +56,7 @@ function store() {
     }
     $.ajax({
         type: "POST",
-        url: "http://localhost:6844/customer/appointment/schedule",
+        url: "http://10.230.179.19:6844/customer/appointment/schedule",
         async: false,
         data: json,
         contentType: "application/json",

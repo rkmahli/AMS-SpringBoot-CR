@@ -43,7 +43,7 @@ function getPassword() {
     var str4;
     var str5=JSON.stringify(json);
     
-    var url = 'http://localhost:6844/';
+    var url = 'http://10.230.179.19:6844/';
     if (str.substr(0, 2) == 'CU') {
         url = url + 'customer' + '/password/';
         str3 = 'custUser';

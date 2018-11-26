@@ -462,7 +462,7 @@ public class RestResourse {
 			}
 			
 			
-			int pol=aptr.getSuccessfulAppointments(id).size();
+			int pol=list.size();
 			
 			int app=aptr.findByAgentId(id).size();
 			
@@ -499,5 +499,14 @@ public class RestResourse {
 			return new ResponseEntity<List<Customer>>(list, HttpStatus.OK);
 		}
 		return new ResponseEntity<List<Customer>>(HttpStatus.NOT_FOUND);
+	}
+	
+	@GetMapping("/admin/customer/appointment/fail/{id}")
+	public @ResponseBody ResponseEntity<?> failAppointment(@PathVariable String id) {
+		Appointment apt = aptr.findById(Long.parseLong(id)).get();
+		apt.setStatus("Failed");
+		Appointment apt2=aptr.save(apt);
+		if(apt2!=null) return new ResponseEntity<String>("Successful",HttpStatus.OK);
+		return new ResponseEntity<String>("Unsuccessful",HttpStatus.EXPECTATION_FAILED);
 	}
 }

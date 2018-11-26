@@ -37,7 +37,7 @@ function getJson() {
 
     $.ajax({
         type: "GET",
-        url: 'http://localhost:6844/customer/getagent/'+$("#doa").val()+'/'+$("#slot").val(),
+        url: 'http://10.230.179.19:6844/customer/getagent/'+$("#doa").val()+'/'+$("#slot").val(),
         async: false,
         dataType: "text",
         success: function(data){obj.aid=data;},
@@ -56,13 +56,15 @@ function store() {
     }
     $.ajax({
         type: "POST",
-        url: "http://localhost:6844/customer/appointment/schedule",
+        url: "http://10.230.179.19:6844/customer/appointment/schedule",
         async: false,
         data: json,
         contentType: "application/json",
         dataType: "text",
         success: function(data) {
             $("#alertmodalbody").empty(); 
+            $("#alertmodalheader").empty(); 
+            $("#alertmodalheader").append('Successful'); 
             $("#alertmodalbody").append(data); 
             $("#alertmodal").on("hidden.bs.modal", function(){
                 window.location = "CustomerHome";
@@ -71,7 +73,9 @@ function store() {
     },
         error: function() { 
             $("#alertmodalbody").empty(); 
-            $("#alertmodalbody").append('Agents not available for the selected time slot. Please choose another date-time combination.');
+            $("#alertmodalheader").empty(); 
+            $("#alertmodalheader").append('Unsuccessful'); 
+            $("#alertmodalbody").append('Agents not available for the selected time slot. Please choose another slot or date.');
             $("#alertmodal").modal('show');
           }
     });

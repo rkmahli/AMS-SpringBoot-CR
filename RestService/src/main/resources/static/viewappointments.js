@@ -41,13 +41,15 @@ function init() {
     else {
         $.ajax({
             type: "GET",
-            url: "http://localhost:6844/customer/appointment/" + sessionStorage.getItem('custUser'),
+            url: "http://10.230.179.19:6844/customer/appointment/" + sessionStorage.getItem('custUser'),
             async: false,
             dataType: "json",
             success: function (data) { jArr = data; upcoming() },
             error: function () { 
                 $("#alertmodalbody").empty(); 
-                $("#alertmodalbody").append('No appointments to show.');
+                $("#alertmodalheader").empty(); 
+                $("#alertmodalheader").append('No Scheduled Appointments'); 
+                $("#alertmodalbody").append('No appointments have been scheduled. Appointments can be scheduled from Schedule Appointments Module.');
                 $("#alertmodal").on("hidden.bs.modal", function(){
                     window.location = "CustomerHome";
                 });

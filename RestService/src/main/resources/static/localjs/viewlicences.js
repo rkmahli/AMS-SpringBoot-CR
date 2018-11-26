@@ -9,7 +9,7 @@ function init() {
     else {
         $.ajax({
             type: "GET",
-            url: "http://localhost:6844/admin/policy/",
+            url: "http://10.230.179.19:6844/admin/policy/",
             async: false,
             dataType: "json",
             success: function (data) { jArr = data; active() },
@@ -98,7 +98,7 @@ function init() {
 
         $.ajax({
             type: "GET",
-            url: "http://localhost:6844/admin/policy/" + polId,
+            url: "http://10.230.179.19:6844/admin/policy/" + polId,
             async: false,
             dataType: "json",
             success: function (data) {
@@ -142,7 +142,7 @@ function init() {
 
         $.ajax({
             type: "GET",
-            url: "http://localhost:6844/admin/policy/" + polId,
+            url: "http://10.230.179.19:6844/admin/policy/" + polId,
             async: false,
             dataType: "json",
             success: function (data) {
@@ -196,7 +196,7 @@ function init() {
 
         $.ajax({
             type: "GET",
-            url: "http://localhost:6844/admin/policy/" + id,
+            url: "http://10.230.179.19:6844/admin/policy/" + id,
             async: false,
             dataType: "json",
             success: function (data) {
@@ -205,7 +205,7 @@ function init() {
 
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:6844/admin/licence/renew",
+                    url: "http://10.230.179.19:6844/admin/licence/renew",
                     async: false,
                     data: json,
                     contentType: "application/json",

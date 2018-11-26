@@ -76,7 +76,7 @@ function allAgents(){
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:6844/admin/commission/" + $("#from").val() + "/" + $("#to").val(),
+        url: "http://10.230.179.19:6844/admin/commission/" + $("#from").val() + "/" + $("#to").val(),
         async: false,
         dataType: "json",
         success: function (data) {
@@ -119,7 +119,7 @@ function singleAgent(){
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:6844/admin/commission/"+ $("#agentid").val() +"/" + $("#from").val() + "/" + $("#to").val(),
+        url: "http://10.230.179.19:6844/admin/commission/"+ $("#agentid").val() +"/" + $("#from").val() + "/" + $("#to").val(),
         async: false,
         dataType: "json",
         success: function (data) {
@@ -138,7 +138,7 @@ function singleAgent(){
 function populateAgents(){
     $.ajax({
         type: "GET",
-        url: "http://localhost:6844/admin/agent",
+        url: "http://10.230.179.19:6844/admin/agent",
         async: false,
         dataType: "json",
         success: function (data) {

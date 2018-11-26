@@ -117,7 +117,7 @@ function store() {
     var json = getJson();
     $.ajax({
         type: "POST",
-        url: "http://localhost:6844/admin/customer/policy/register",
+        url: "http://10.230.179.19:6844/admin/customer/policy/register",
         async: false,
         data: json,
         contentType: "application/json",
@@ -153,7 +153,7 @@ function init() {
 function populateCustomers() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:6844/admin/customer",
+        url: "http://10.230.179.19:6844/admin/customer",
         async: false,
         dataType: "json",
         success: function (data) {
@@ -172,7 +172,7 @@ function populateCustomers() {
 function populateAgents() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:6844/admin/agent",
+        url: "http://10.230.179.19:6844/admin/agent",
         async: false,
         dataType: "json",
         success: function (data) {
@@ -191,7 +191,7 @@ function populateAgents() {
 function populatePolicies() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:6844/admin/policy",
+        url: "http://10.230.179.19:6844/admin/policy",
         async: false,
         dataType: "json",
         success: function (data) {

@@ -151,14 +151,16 @@ function validateDor() {
         var json=getJson();
         $.ajax({
           type: "POST",
-          url: "http://localhost:6844/admin/licence/add",
+          url: "http://10.230.179.19:6844/admin/licence/add",
           async: false,
           data: json,
           contentType: "application/json",
           dataType: "text",
         success: function (data){
             $("#alertmodalbody").empty();
-            $("#alertmodalbody").append('Licence for Policy ID '+data+' has been registered successfully!');
+            $("#alertmodalheader").empty();
+            $("#alertmodalheader").append('Successful');
+            $("#alertmodalbody").append('Policy with ID '+data+' has been successfully registered!');
             $("#alertmodal").on("hidden.bs.modal", function () {
                 window.location.href="AdminHome";
             });
@@ -166,7 +168,9 @@ function validateDor() {
         }, 
         error: function (){
             $("#alertmodalbody").empty();
-            $("#alertmodalbody").append('Unable to store to database!');
+            $("#alertmodalheader").empty();
+            $("#alertmodalheader").append('Unsuccessful');
+            $("#alertmodalbody").append('Licence addition failed! Please try later.');
             $("#alertmodal").modal('show');
         }
         });
@@ -188,7 +192,7 @@ function logout(){
 function fillCID(){
     $.ajax({
         type: "GET",
-        url: "http://localhost:6844/admin/policy/",
+        url: "http://10.230.179.19:6844/admin/policy/",
         async: false,
         dataType: "json",
         success: function (data) {

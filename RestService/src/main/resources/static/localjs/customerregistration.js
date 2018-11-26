@@ -257,7 +257,7 @@ function validatePremiums() {
         var json = getJson();
         $.ajax({
             type: "POST",
-            url: "http://localhost:6844/customer/register",
+            url: "http://10.230.179.19:6844/customer/register",
             async: false,
             data: json,
             contentType: "application/json",

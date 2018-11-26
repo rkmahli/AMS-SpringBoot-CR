@@ -145,7 +145,7 @@ jQuery(function ($) {
         var json = getJson();
         $.ajax({
             type: "POST",
-            url: "http://localhost:6844/customer/register",
+            url: "http://10.230.179.19:6844/customer/register",
             async: false,
             data: json,
             contentType: "application/json",
@@ -154,8 +154,8 @@ jQuery(function ($) {
 
                 $("#alertmodalbody").empty();
                 $("#alertmodalheader").empty();
-                $("#alertmodalheader").append('Success');
-                $("#alertmodalbody").append('Your login ID is ' + data);
+                $("#alertmodalheader").append('Registration Successful');
+                $("#alertmodalbody").append('You have been successfully registered as a customer. Your login ID is ' + data);
                 $("#alertmodal").on("hidden.bs.modal", function () {
                     window.location = "Login";
                 });
@@ -165,8 +165,8 @@ jQuery(function ($) {
 
                 $("#alertmodalbody").empty();
                 $("#alertmodalheader").empty();
-                $("#alertmodalheader").append('Error');
-                $("#alertmodalbody").append('Server error, please try later.');
+                $("#alertmodalheader").append('Registration Unsuccessful');
+                $("#alertmodalbody").append('Your registration was unsuccessful. Please try later.');
                 $("#alertmodal").modal('show');
             }
         });

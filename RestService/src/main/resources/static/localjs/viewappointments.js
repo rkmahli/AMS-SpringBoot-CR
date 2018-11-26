@@ -41,7 +41,7 @@ function init() {
     else {
         $.ajax({
             type: "GET",
-            url: "http://localhost:6844/customer/appointment/" + sessionStorage.getItem('custUser'),
+            url: "http://10.230.179.19:6844/customer/appointment/" + sessionStorage.getItem('custUser'),
             async: false,
             dataType: "json",
             success: function (data) { jArr = data; upcoming() },

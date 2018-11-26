@@ -207,7 +207,7 @@ body {
             <div class="form-group ">
                 <label><span style='color: red'>*</span>Name</label>
 
-                <input class="form-control form-control-danger" name="name" type="text" placeholder="Enter agent name">
+                <input class="form-control form-control-danger" name="name" type="text" placeholder="Enter agent name" id="name">
 
             </div>
             <div class="row">
@@ -250,17 +250,16 @@ body {
             <div class="row">
                 <div class="form-group col-md-6">
                     <label><span style='color: red'>*</span>Permanent Address</label>
-                    <textarea class="form-control" name="paddress" id="paddress" rows="5" placeholder="Enter agent's permanent address"></textarea>
+                    <textarea class="form-control" name="paddress" id="pAddress" rows="5" placeholder="Enter agent's permanent address"></textarea>
                 </div>
                 <div class="form-group col-md-6">
                     <label><span style='color: red'>*</span>Current Address</label>
-                    <textarea class="form-control" name="caddress" id="caddress" rows="5" placeholder="Enter agent's current address"></textarea>
+                    <textarea class="form-control" name="caddress" id="cAddress" rows="5" placeholder="Enter agent's current address"></textarea>
                 </div>
 
             </div>
             <div class="material-switch pull-right">
-                <input id="filladdress" name="someSwitchOption001" type="checkbox"> current address same as permanent
-                address</input>
+                <input id="filladdress" name="someSwitchOption001" type="checkbox"> Copy Current Address to Permanenent Address</input>
             </div>
             <div class="row">
                 <div class="form-group col-sm-12 col-lg-6">
@@ -274,7 +273,7 @@ body {
                 </div>
                 <div class="form-group col-sm-12 col-lg-6 " id="apidfield">
                     <label><span style="color:red">*</span>Passport</label>
-                    <input type="text" class="form-control" name="apid_passport" id="apid" placeholder="Enter Passport Number">
+                    <input type="text" class="form-control" name="apid_passport" id="apid" placeholder="ADD DDDDD">
                 </div>
             </div>
 
@@ -302,6 +301,7 @@ body {
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
+                        <h4 id="alertmodalheader"></h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body" id="alertmodalbody">
