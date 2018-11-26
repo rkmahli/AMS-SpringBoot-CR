@@ -7,13 +7,41 @@ public class AgentHolder {
 	private Date dob;
 	private String contact;
 	private String email;
-	private String address;
 	private String zipcode;
 	private String city;
 	private String state;
 	private Date doj;
 	private String type;
+	private String pAddress;
+	private String cAddress;
+	private String apid;
+	private String idType;
 
+	
+	public String getpAddress() {
+		return pAddress;
+	}
+	public void setpAddress(String pAddress) {
+		this.pAddress = pAddress;
+	}
+	public String getcAddress() {
+		return cAddress;
+	}
+	public void setcAddress(String cAddress) {
+		this.cAddress = cAddress;
+	}
+	public String getApid() {
+		return apid;
+	}
+	public void setApid(String apid) {
+		this.apid = apid;
+	}
+	public String getIdType() {
+		return idType;
+	}
+	public void setIdType(String idType) {
+		this.idType = idType;
+	}
 	public String getName() {
 		return name;
 	}
@@ -38,12 +66,7 @@ public class AgentHolder {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
+
 	public String getZipcode() {
 		return zipcode;
 	}

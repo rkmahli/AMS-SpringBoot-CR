@@ -170,13 +170,16 @@ public class RestResourse {
 		agent.setDateOfBirth(ah.getDob());
 		agent.setEmailAddress(ah.getEmail());
 		agent.setContactNumber(ah.getContact());
-		agent.setAddress(ah.getAddress());
+		agent.setcAddress(ah.getcAddress());
+		agent.setpAddress(ah.getpAddress());
 		agent.setCity(ah.getCity());
 		agent.setState(ah.getState());
 		agent.setZipCode(ah.getZipcode());
 		agent.setDateOfBirth(ah.getDob());
 		agent.setDateOfJoining(ah.getDoj());
 		agent.setEmploymentType(ah.getType());
+		agent.setApid(ah.getApid());
+		agent.setIdType(ah.getIdType());
 
 		List<Agent> list = agr.findAll();
 		if (list.isEmpty()) {

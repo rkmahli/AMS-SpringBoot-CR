@@ -35,17 +35,23 @@ public class Agent {
     @Column(name="email_address")
     private String emailAddress;
     
+	@Basic
+    @Column(name="current_address")
+    private String cAddress;
+	
     @Basic
-    private String address;
-
-    public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
+    @Column(name="permanent_address")
+    private String pAddress;
+    
+    @Basic
+    @Column(name="id_type")
+    private String idType;
+    
+	@Basic
+    @Column(name="apid")
+    private String apid;
+	
+	
 	@Basic
     @Column(name="zip_code")
     private String zipCode;
@@ -65,7 +71,39 @@ public class Agent {
     @Column(name="employment_type")
     private String employmentType;
 
-    public String getId() {
+    public String getcAddress() {
+		return cAddress;
+	}
+
+	public void setcAddress(String cAddress) {
+		this.cAddress = cAddress;
+	}
+
+	public String getpAddress() {
+		return pAddress;
+	}
+
+	public void setpAddress(String pAddress) {
+		this.pAddress = pAddress;
+	}
+
+	public String getIdType() {
+		return idType;
+	}
+
+	public void setIdType(String idType) {
+		this.idType = idType;
+	}
+
+	public String getApid() {
+		return apid;
+	}
+
+	public void setApid(String apid) {
+		this.apid = apid;
+	}
+
+	public String getId() {
         return id;
     }
 
