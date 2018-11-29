@@ -338,6 +338,9 @@ function search() {
         if (regex.test(jArr[i].licenceRegistryDate.toString())) {
             flag = true;
         }
+        if (regex.test(jArr[i].companyId)) {
+            flag = true;
+        }
         if (regex.test(jArr[i].licenceExpiryDate.toString())) {
             flag = true;
         }
